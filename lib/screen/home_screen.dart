@@ -18,7 +18,12 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: 0,
+      animationDuration: Duration(milliseconds: 100),
+    );
   }
 
   // ignore: annotate_overrides
@@ -28,41 +33,49 @@ class _HomeScreenState extends State<HomeScreen>
         appBar: AppBar(
           flexibleSpace: _Tabbar_part(tabController: _tabController),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              _main_label(),
-              _pageview_part(),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-              _pageview_2_part(),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-              _pageview_3_part(),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      '© 2024',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: 'NanumMyeongjo',
-                        fontWeight: FontWeight.w700,
-                      ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  _main_label(),
+                  _pageview_part(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+                  _pageview_2_part(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+                  _pageview_3_part(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          '© 2024',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'NanumMyeongjo',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          'Made by HAKODATE TEAM',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'NanumMyeongjo',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Made by HAKODATE TEAM',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: 'NanumMyeongjo',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.012),
+                ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-            ],
-          ),
+            ),
+            Container(
+              child: Text('2페이지'),
+            ),
+          ],
         ),
       ),
     );
@@ -175,15 +188,29 @@ class _pageview_part extends StatefulWidget {
 class _pageview_partState extends State<_pageview_part> {
   PageController pageController =
       PageController(initialPage: 1000, viewportFraction: 0.8);
+  Timer? timer;
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(milliseconds: 3500), (Timer timer) {
+      if (pageController.hasClients) {
+        pageController.nextPage(
+            duration: Duration(milliseconds: 2000),
+            curve: Curves.fastOutSlowIn);
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => startTimer());
+  }
 
-    Timer.periodic(Duration(milliseconds: 3500), (Timer timer) {
-      pageController.nextPage(
-          duration: Duration(milliseconds: 2000), curve: Curves.linear);
-    });
+  @override
+  void dispose() {
+    timer?.cancel();
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -219,25 +246,35 @@ class _pageview_2_part extends StatefulWidget {
   State<_pageview_2_part> createState() => _pageview_2_partState();
 }
 
-class _pageview_2_partState extends State<_pageview_2_part> {
+class _pageview_2_partState extends State<_pageview_2_part>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   PageController pageController =
       PageController(initialPage: 1003, viewportFraction: 0.5);
+  Timer? timer;
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(milliseconds: 6000), (Timer timer) {
+      if (pageController.hasClients) {
+        pageController.nextPage(
+            duration: Duration(milliseconds: 6000), curve: Curves.linear);
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => startTimer());
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (pageController.hasClients) {
-        pageController.nextPage(
-            duration: Duration(seconds: 6), curve: Curves.linear);
-      }
-    });
-
-    Timer.periodic(Duration(seconds: 6), (Timer timer) {
-      pageController.nextPage(
-          duration: Duration(seconds: 6), curve: Curves.linear);
-    });
+  @override
+  void dispose() {
+    timer?.cancel();
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -277,22 +314,28 @@ class _pageview_3_part extends StatefulWidget {
 class _pageview_3_partState extends State<_pageview_3_part> {
   PageController pageController =
       PageController(initialPage: 1000, viewportFraction: 0.65);
+  Timer? timer;
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(milliseconds: 8000), (Timer timer) {
+      if (pageController.hasClients) {
+        pageController.nextPage(
+            duration: Duration(milliseconds: 8000), curve: Curves.linear);
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => startTimer());
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (pageController.hasClients) {
-        pageController.nextPage(
-            duration: Duration(seconds: 8), curve: Curves.linear);
-      }
-    });
-
-    Timer.periodic(Duration(seconds: 8), (Timer timer) {
-      pageController.nextPage(
-          duration: Duration(seconds: 8), curve: Curves.linear);
-    });
+  @override
+  void dispose() {
+    timer?.cancel();
+    pageController.dispose();
+    super.dispose();
   }
 
   @override
