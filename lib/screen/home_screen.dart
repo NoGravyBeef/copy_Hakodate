@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen>
       length: 2,
       vsync: this,
       initialIndex: 0,
-      animationDuration: Duration(milliseconds: 100),
+      animationDuration: Duration(milliseconds: 10),
     );
   }
 
@@ -31,46 +31,71 @@ class _HomeScreenState extends State<HomeScreen>
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          flexibleSpace: _Tabbar_part(tabController: _tabController),
+          flexibleSpace: Column(
+            children: [
+              _Tabbar_part(tabController: _tabController),
+            ],
+          ),
         ),
         body: TabBarView(
           controller: _tabController,
           children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  _main_label(),
-                  _pageview_part(),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-                  _pageview_2_part(),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-                  _pageview_3_part(),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          '© 2024',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'NanumMyeongjo',
-                            fontWeight: FontWeight.w700,
+            Column(
+              children: [
+                _main_label(),
+                Expanded(
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            _pageview_part(),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.015),
+                            _pageview_2_part(),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.015),
+                            _pageview_3_part(),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01),
+                          ],
+                        ),
+                      ),
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                '© 2024',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'NanumMyeongjo',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              Text(
+                                'Made by HAKODATE TEAM',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'NanumMyeongjo',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.01),
+                            ],
                           ),
                         ),
-                        Text(
-                          'Made by HAKODATE TEAM',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'NanumMyeongjo',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.012),
-                ],
-              ),
+                ),
+              ],
             ),
             Container(
               child: Text('2페이지'),
@@ -203,7 +228,16 @@ class _pageview_partState extends State<_pageview_part> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => startTimer());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 앱이 시작하자마자 바로 페이지 전환 시작
+      if (pageController.hasClients) {
+        pageController.nextPage(
+            duration: Duration(milliseconds: 2000),
+            curve: Curves.fastOutSlowIn);
+      }
+      // 그 후, 주기적인 페이지 전환 시작
+      startTimer();
+    });
   }
 
   @override
@@ -236,6 +270,8 @@ class _pageview_partState extends State<_pageview_part> {
   }
 }
 
+//
+
 // ignore: must_be_immutable
 class _pageview_2_part extends StatefulWidget {
   const _pageview_2_part({
@@ -267,7 +303,15 @@ class _pageview_2_partState extends State<_pageview_2_part>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => startTimer());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 앱이 시작하자마자 바로 페이지 전환 시작
+      if (pageController.hasClients) {
+        pageController.nextPage(
+            duration: Duration(milliseconds: 6000), curve: Curves.linear);
+      }
+      // 그 후, 주기적인 페이지 전환 시작
+      startTimer();
+    });
   }
 
   @override
@@ -301,6 +345,8 @@ class _pageview_2_partState extends State<_pageview_2_part>
   }
 }
 
+//
+
 // ignore: must_be_immutable
 class _pageview_3_part extends StatefulWidget {
   const _pageview_3_part({
@@ -328,7 +374,15 @@ class _pageview_3_partState extends State<_pageview_3_part> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => startTimer());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // 앱이 시작하자마자 바로 페이지 전환 시작
+      if (pageController.hasClients) {
+        pageController.nextPage(
+            duration: Duration(milliseconds: 8000), curve: Curves.linear);
+      }
+      // 그 후, 주기적인 페이지 전환 시작
+      startTimer();
+    });
   }
 
   @override
