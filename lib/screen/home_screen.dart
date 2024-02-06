@@ -1,8 +1,12 @@
 // ignore_for_file: unused_element, sized_box_for_whitespace, camel_case_types, prefer_const_literals_to_create_immutables
 
 import 'dart:async';
+import 'package:copy_hakodate/screen/location.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,15 +18,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? _tabController;
   AnimationController? _animationController;
-  static final LatLng schoolLatlng = LatLng(
-    //위도와 경도 값 지정
-    37.540853,
-    127.078971,
-  );
   static final CameraPosition initialPosition = CameraPosition(
     //지도를 바라보는 카메라 위치
-    target: schoolLatlng, //카메라 위치(위도, 경도)
-    zoom: 13, //확대 정도
+    target: initialGPS, //카메라 위치(위도, 경도)
+    zoom: 12, //확대 정도
   );
 
   @override
@@ -72,13 +71,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           children: [
             Column(
               children: [
-                main_label(animationController: _animationController),
                 Expanded(
                   child: CustomScrollView(
                     slivers: [
                       SliverToBoxAdapter(
                         child: Column(
                           children: [
+                            main_label(
+                                animationController: _animationController),
                             _pageview_part(
                                 animationController: _animationController),
                             SizedBox(
@@ -141,15 +141,95 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             //
             //
             //여기서부터 route page
-            Column(
-              children: [
-                main_label(animationController: _animationController),
-                google_map_part(
-                    initialPosition: initialPosition,
-                    animationController: _animationController),
+            SlidingUpPanel(
+              margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
+              minHeight: 90,
+              maxHeight: 450,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18), topRight: Radius.circular(18)),
+              backdropEnabled: true,
+              backdropOpacity: 0.3,
+              parallaxEnabled: true,
+              parallaxOffset: .4,
+              boxShadow: [
+                BoxShadow(
+                  color: const Color.fromARGB(255, 42, 42, 42).withOpacity(0.5),
+                  blurRadius: 10,
+                )
               ],
+              header: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                  color: Colors.white,
+                ),
+                height: 80,
+                child: Column(
+                  children: [
+                    dragHandle(),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(
+                        'HAKODATE',
+                        style: TextStyle(
+                          fontSize: 33,
+                          fontFamily: 'DancingScript',
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              panel: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 80,
+                    ),
+                    Text(paneltext),
+                  ],
+                ),
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    main_label(animationController: _animationController),
+                    google_map_part(
+                        initialPosition: initialPosition,
+                        animationController: _animationController),
+                  ],
+                ),
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class dragHandle extends StatelessWidget {
+  const dragHandle({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.topCenter, // 이 줄은 Container 자체의 정렬을 지정합니다.
+      child: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: Container(
+          width: 80,
+          height: 5.5,
+          decoration: BoxDecoration(
+            color: Colors.grey[350],
+            borderRadius: BorderRadius.circular(12), // 헤더의 모서리를 둥글게 합니다.
+          ),
         ),
       ),
     );
@@ -224,7 +304,7 @@ class main_labelState extends State<main_label>
       opacity: widget.animationController!,
       child: Padding(
         padding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.037),
+            vertical: MediaQuery.of(context).size.height * 0.034),
         child: Center(
           child: Column(
             children: [
@@ -527,6 +607,18 @@ class _pageview_3_partState extends State<_pageview_3_part> {
 //
 //
 //
+class LocationDetail {
+  final String name;
+  final List<String> descriptions; // 변경: List<String> 타입으로
+  final List<String> imageUrls;
+
+  LocationDetail({
+    required this.name,
+    required this.descriptions,
+    required this.imageUrls,
+  });
+}
+
 class google_map_part extends StatefulWidget {
   const google_map_part(
       {Key? key, this.animationController, required this.initialPosition})
@@ -540,29 +632,207 @@ class google_map_part extends StatefulWidget {
 
 class _google_map_partState extends State<google_map_part>
     with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+  //
+  final List<LocationDetail> locationDetails =
+      hakodate_location.map((location) {
+    final String name = location['name'] as String;
+    final List<String> descriptions =
+        (location['description'] as List).cast<String>();
+    final List<String> imageUrls =
+        (location['imageUrls'] as List).cast<String>();
+
+    return LocationDetail(
+        name: name, descriptions: descriptions, imageUrls: imageUrls);
+  }).toList();
 
   @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return FadeTransition(
-      opacity: widget.animationController!,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.7,
-          decoration: BoxDecoration(),
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            child: GoogleMap(
-              //구글 맵 사용
-              mapType: MapType.terrain, //지도 유형 설정
-              initialCameraPosition: widget.initialPosition, //지도 초기 위치 설정
-            ),
+  bool get wantKeepAlive => true;
+  GoogleMapController? _mapController;
+  final _markers = <Marker>{};
+
+  @override
+  void initState() {
+    _markers.addAll(
+      hakodate_location.map(
+        (e) => Marker(
+          markerId: MarkerId(e['name'] as String),
+          position: LatLng(
+            e['latitude'] as double,
+            e['longitude'] as double,
           ),
         ),
       ),
     );
+    super.initState();
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    _mapController = controller;
+    _mapController!.setMapStyle(_mapStyle);
+
+    setState(() {
+      _markers.clear();
+      for (final location in hakodate_location) {
+        final name = location['name'] as String; // String으로 명시적 캐스팅
+        final latitude = location['latitude'] as double; // double로 명시적 캐스팅
+        final longitude = location['longitude'] as double; // double로 명시적 캐스팅
+
+        final marker = Marker(
+          markerId: MarkerId(name),
+          position: LatLng(latitude, longitude),
+          // infoWindow: InfoWindow(title: name),
+          onTap: () {
+            // 마커 탭 시 상세 정보 다이얼로그를 표시하는 로직
+            final locationDetail = locationDetails.firstWhere(
+                (detail) => detail.name == name,
+                orElse: () => LocationDetail(
+                    name: name, descriptions: [], imageUrls: []));
+            _showLocationDetailDialog(locationDetail);
+          },
+        );
+        _markers.add(marker);
+      }
+    });
+  }
+
+  void _showLocationDetailDialog(LocationDetail detail) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(detail.name),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                height: 200, // 이미지 슬라이더의 높이
+                /*child: PageView.builder(
+                  itemCount: detail.imageUrls.length,
+                  itemBuilder: (context, index) {
+                    return Image.asset(detail.imageUrls[index]); // 이미지 표시
+                  },
+                ),*/
+              ),
+              ...detail.descriptions
+                  .map((desc) => Text(desc))
+                  .toList(), // 모든 설명 표시
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Close'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(45),
+                border:
+                    Border.all(color: Colors.grey.withOpacity(0.6), width: 2)),
+            child: FadeTransition(
+              opacity: widget.animationController!,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  decoration: BoxDecoration(),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(45),
+                    child: GoogleMap(
+                      //구글 맵 사용
+                      markers: _markers,
+                      onMapCreated: _onMapCreated,
+                      gestureRecognizers: <Factory<
+                          OneSequenceGestureRecognizer>>{
+                        Factory<OneSequenceGestureRecognizer>(
+                            () => EagerGestureRecognizer())
+                      },
+                      initialCameraPosition:
+                          widget.initialPosition, //지도 초기 위치 설정
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
+
+var paneltext = '''asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asd
+fas
+df
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+asdf
+''';
+
+String _mapStyle = '''
+  [
+  {
+    "featureType": "poi",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.business",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "transit",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  }
+]
+  ''';
