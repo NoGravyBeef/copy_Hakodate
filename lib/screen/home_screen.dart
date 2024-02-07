@@ -142,11 +142,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             //
             //여기서부터 route page
             SlidingUpPanel(
-              margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
-              minHeight: 90,
-              maxHeight: 450,
+              margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
+              minHeight: 60,
+              maxHeight: 700,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(18), topRight: Radius.circular(18)),
+                topLeft: Radius.circular(45),
+                topRight: Radius.circular(45),
+              ),
               backdropEnabled: true,
               backdropOpacity: 0.3,
               parallaxEnabled: true,
@@ -157,39 +159,134 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   blurRadius: 10,
                 )
               ],
-              header: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                  color: Colors.white,
-                ),
-                height: 80,
-                child: Column(
-                  children: [
-                    dragHandle(),
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Text(
-                        'HAKODATE',
-                        style: TextStyle(
-                          fontSize: 33,
-                          fontFamily: 'DancingScript',
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              header: dragHandle(),
               panel: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SizedBox(
-                      height: 80,
+                    Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(35),
+                              topRight: Radius.circular(35),
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 0,
+                                  blurRadius: 3.0,
+                                  offset: Offset(0, 5)),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(35),
+                              topRight: Radius.circular(35),
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
+                            child: Container(
+                                width: MediaQuery.of(context).size.width - 16,
+                                height: 500,
+                                child: Image.asset(
+                                  'asset/img/main2.jpg',
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width - 16,
+                          height: 500,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(35),
+                              topRight: Radius.circular(35),
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.white.withOpacity(0),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                              stops: [0, 0.7],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(35),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.cloudy_snowing,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                                SizedBox(height: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Hakodate',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        letterSpacing: 1.5,
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Winter 1.20 - 1.24 days',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontFamily: 'DancingScript',
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 3,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 15),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(paneltext),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 15),
+                          Text('밤이 내려앉을 때 비로소 빛나기 시작하는 도시.'),
+                          SizedBox(height: 5),
+                          Text(
+                              '''일본 홋카이도 남부에 위치한 항구 도시로, 환상적인 야경, 역사적 건축물, 신선한 해산물로 유명하다. 하코다테는 야경이 아름다운 홋카이도의 보석 같은 도시다.'''),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: Text(
+                          'Copy_Hakodate',
+                          style: TextStyle(),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -227,7 +324,7 @@ class dragHandle extends StatelessWidget {
           width: 80,
           height: 5.5,
           decoration: BoxDecoration(
-            color: Colors.grey[350],
+            color: Color.fromARGB(255, 87, 87, 87),
             borderRadius: BorderRadius.circular(12), // 헤더의 모서리를 둥글게 합니다.
           ),
         ),
@@ -258,14 +355,14 @@ class _Tabbar_part extends StatelessWidget {
       color: Colors.black,
       child: TabBar(
         padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.15),
+            horizontal: MediaQuery.of(context).size.width * 0.1),
         labelPadding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.001),
+            vertical: MediaQuery.of(context).size.height * 0.0045),
         controller: _tabController,
         labelStyle: TextStyle(
-            fontSize: MediaQuery.of(context).size.width * 0.03,
+            fontSize: MediaQuery.of(context).size.width * 0.032,
             fontFamily: 'NanumMyeongjo',
-            fontWeight: FontWeight.w300),
+            fontWeight: FontWeight.w700),
         labelColor: Colors.white,
         unselectedLabelColor: Colors.white,
         indicator: BoxDecoration(color: Color.fromARGB(255, 16, 16, 16)),
@@ -773,29 +870,8 @@ class _google_map_partState extends State<google_map_part>
   }
 }
 
-var paneltext = '''asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asd
-fas
-df
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
-asdf
+var paneltext = '''
+
 ''';
 
 String _mapStyle = '''
