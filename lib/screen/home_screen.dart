@@ -191,7 +191,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                             child: Container(
                                 width: MediaQuery.of(context).size.width - 16,
-                                height: 500,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.65,
                                 child: Image.asset(
                                   'asset/img/main2.jpg',
                                   fit: BoxFit.cover,
@@ -200,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width - 16,
-                          height: 500,
+                          height: MediaQuery.of(context).size.height * 0.65,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(35),
@@ -264,15 +265,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 30),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 15),
-                          Text('밤이 내려앉을 때 비로소 빛나기 시작하는 도시.'),
-                          SizedBox(height: 5),
+                          SizedBox(height: 20),
                           Text(
-                              '''일본 홋카이도 남부에 위치한 항구 도시로, 환상적인 야경, 역사적 건축물, 신선한 해산물로 유명하다. 하코다테는 야경이 아름다운 홋카이도의 보석 같은 도시다.'''),
+                            '밤이 내려앉을 때 비로소 빛나기 시작하는 도시.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '''일본 홋카이도 남부에 위치한 항구 도시로, 환상적인 야경, 역사적 건축물, 신선한 해산물로 유명하다. 하코다테는 야경이 아름다운 홋카이도의 보석 같은 도시다.''',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -283,7 +295,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                         child: Text(
                           'Copy_Hakodate',
-                          style: TextStyle(),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'DancingScript',
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
                     ),
