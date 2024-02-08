@@ -1,5 +1,4 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter/material.dart';
 
 final LatLng initialGPS = LatLng(
     //위도와 경도 값 지정
