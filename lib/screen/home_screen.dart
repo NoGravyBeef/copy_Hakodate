@@ -161,158 +161,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ],
               header: dragHandle(),
               panel: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(35),
-                              topRight: Radius.circular(35),
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black.withOpacity(0.5),
-                                  spreadRadius: 0,
-                                  blurRadius: 3.0,
-                                  offset: Offset(0, 5)),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(35),
-                              topRight: Radius.circular(35),
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
-                            ),
-                            child: Container(
-                                width: MediaQuery.of(context).size.width - 16,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.65,
-                                child: Image.asset(
-                                  'asset/img/main2.jpg',
-                                  fit: BoxFit.cover,
-                                )),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width - 16,
-                          height: MediaQuery.of(context).size.height * 0.65,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(35),
-                              topRight: Radius.circular(35),
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.white.withOpacity(0),
-                                Colors.black.withOpacity(0.8),
-                              ],
-                              stops: [0, 0.7],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: Padding(
-                            padding: const EdgeInsets.all(35),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.cloudy_snowing,
-                                  color: Colors.white,
-                                  size: 40,
-                                ),
-                                SizedBox(height: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Hakodate',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        letterSpacing: 1.5,
-                                        fontSize: 40,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Winter 1.20 - 1.24 days',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontFamily: 'DancingScript',
-                                        fontWeight: FontWeight.w900,
-                                        letterSpacing: 3,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 15),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20),
-                          Text(
-                            '밤이 내려앉을 때 비로소 빛나기 시작하는 도시.',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            '''일본 홋카이도 남부에 위치한 항구 도시로, 환상적인 야경, 역사적 건축물, 신선한 해산물로 유명하다. 하코다테는 야경이 아름다운 홋카이도의 보석 같은 도시다.''',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                        child: Text(
-                          'Copy_Hakodate',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'DancingScript',
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                child: sliding_up_panel_part(),
               ),
               body: SingleChildScrollView(
                 child: Column(
                   children: [
                     main_label(animationController: _animationController),
                     google_map_part(
-                        initialPosition: initialPosition,
-                        animationController: _animationController),
+                      animationController:
+                          _animationController, // 여기서 _animationController는 HomeScreen 상태에 정의된 AnimationController 인스턴스입니다.
+                      initialPosition: initialPosition,
+                    )
                   ],
                 ),
               ),
@@ -320,6 +179,159 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
       ),
+    );
+  }
+}
+
+class sliding_up_panel_part extends StatelessWidget {
+  const sliding_up_panel_part({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(35),
+                  topRight: Radius.circular(35),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 0,
+                      blurRadius: 3.0,
+                      offset: Offset(0, 5)),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(35),
+                  topRight: Radius.circular(35),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                child: Container(
+                    width: MediaQuery.of(context).size.width - 16,
+                    height: MediaQuery.of(context).size.height * 0.65,
+                    child: Image.asset(
+                      'asset/img/main2.jpg',
+                      fit: BoxFit.cover,
+                    )),
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width - 16,
+              height: MediaQuery.of(context).size.height * 0.65,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(35),
+                  topRight: Radius.circular(35),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white.withOpacity(0),
+                    Colors.black.withOpacity(0.8),
+                  ],
+                  stops: [0, 0.7],
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(35),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.cloudy_snowing,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    SizedBox(height: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hakodate',
+                          style: TextStyle(
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                            fontSize: 40,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          'Winter 1.20 - 1.24 days',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: 'DancingScript',
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 3,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              Text(
+                '밤이 내려앉을 때 비로소 빛나기 시작하는 도시.',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                '''일본 홋카이도 남부에 위치한 항구 도시로, 환상적인 야경, 역사적 건축물, 신선한 해산물로 유명하다. 하코다테는 야경이 아름다운 홋카이도의 보석 같은 도시다.''',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Text(
+              'Copy_Hakodate',
+              style: TextStyle(
+                fontSize: 12,
+                fontFamily: 'DancingScript',
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -722,11 +734,15 @@ class _pageview_3_partState extends State<_pageview_3_part> {
 //
 class LocationDetail {
   final String name;
+  final String rating;
+  final String details;
   final List<String> descriptions; // 변경: List<String> 타입으로
   final List<String> imageUrls;
 
   LocationDetail({
     required this.name,
+    required this.rating,
+    required this.details,
     required this.descriptions,
     required this.imageUrls,
   });
@@ -749,13 +765,19 @@ class _google_map_partState extends State<google_map_part>
   final List<LocationDetail> locationDetails =
       hakodate_location.map((location) {
     final String name = location['name'] as String;
+    final String rating = location['rating'] as String;
+    final String details = location['details'] as String;
     final List<String> descriptions =
         (location['description'] as List).cast<String>();
     final List<String> imageUrls =
         (location['imageUrls'] as List).cast<String>();
 
     return LocationDetail(
-        name: name, descriptions: descriptions, imageUrls: imageUrls);
+        name: name,
+        rating: rating,
+        details: details,
+        descriptions: descriptions,
+        imageUrls: imageUrls);
   }).toList();
 
   @override
@@ -787,6 +809,8 @@ class _google_map_partState extends State<google_map_part>
       _markers.clear();
       for (final location in hakodate_location) {
         final name = location['name'] as String; // String으로 명시적 캐스팅
+        final rating = location['rating'] as String;
+        final details = location['details'] as String;
         final latitude = location['latitude'] as double; // double로 명시적 캐스팅
         final longitude = location['longitude'] as double; // double로 명시적 캐스팅
 
@@ -799,8 +823,12 @@ class _google_map_partState extends State<google_map_part>
             final locationDetail = locationDetails.firstWhere(
                 (detail) => detail.name == name,
                 orElse: () => LocationDetail(
-                    name: name, descriptions: [], imageUrls: []));
-            _showLocationDetailDialog(locationDetail);
+                    name: name,
+                    rating: rating,
+                    details: details,
+                    descriptions: [],
+                    imageUrls: []));
+            showLocationDetailDialog(context, locationDetail);
           },
         );
         _markers.add(marker);
@@ -808,37 +836,39 @@ class _google_map_partState extends State<google_map_part>
     });
   }
 
-  void _showLocationDetailDialog(LocationDetail detail) {
+  void showLocationDetailDialog(BuildContext context, LocationDetail detail) {
+    PageController pageController = PageController(initialPage: 0);
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(detail.name),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 200, // 이미지 슬라이더의 높이
-                /*child: PageView.builder(
-                  itemCount: detail.imageUrls.length,
-                  itemBuilder: (context, index) {
-                    return Image.asset(detail.imageUrls[index]); // 이미지 표시
-                  },
-                ),*/
-              ),
-              ...detail.descriptions
-                  .map((desc) => Text(desc))
-                  .toList(), // 모든 설명 표시
-            ],
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            width: double.maxFinite,
+            height: 400,
+            child: Column(
+              children: <Widget>[
+                // 이미지 슬라이더 구현
+                Container(
+                  height: 200, // 슬라이더의 높이 설정
+                  child: PageView.builder(
+                    controller: pageController,
+                    itemCount: detail.imageUrls.length,
+                    itemBuilder: (context, index) =>
+                        Image.asset(detail.imageUrls[index], fit: BoxFit.cover),
+                  ),
+                ),
+                // 필요한 경우 여기에 더 많은 위젯 추가
+              ],
+            ),
           ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Close'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('닫기'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
+      },
     );
   }
 
