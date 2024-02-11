@@ -7,6 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -144,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             SlidingUpPanel(
               margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
               minHeight: 60,
-              maxHeight: 700,
+              maxHeight: MediaQuery.of(context).size.height * 0.65 + 180,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(45),
                 topRight: Radius.circular(45),
@@ -736,6 +737,9 @@ class LocationDetail {
   final String name;
   final String rating;
   final String details;
+  final String avgprice;
+  final String address;
+  final String impression;
   final List<String> descriptions; // 변경: List<String> 타입으로
   final List<String> imageUrls;
 
@@ -743,6 +747,9 @@ class LocationDetail {
     required this.name,
     required this.rating,
     required this.details,
+    required this.avgprice,
+    required this.address,
+    required this.impression,
     required this.descriptions,
     required this.imageUrls,
   });
@@ -767,6 +774,9 @@ class _google_map_partState extends State<google_map_part>
     final String name = location['name'] as String;
     final String rating = location['rating'] as String;
     final String details = location['details'] as String;
+    final String avgPrice = location['avgprice'] as String;
+    final String address = location['address'] as String;
+    final String impression = location['impression'] as String;
     final List<String> descriptions =
         (location['description'] as List).cast<String>();
     final List<String> imageUrls =
@@ -776,6 +786,9 @@ class _google_map_partState extends State<google_map_part>
         name: name,
         rating: rating,
         details: details,
+        avgprice: avgPrice,
+        address: address,
+        impression: impression,
         descriptions: descriptions,
         imageUrls: imageUrls);
   }).toList();
@@ -811,6 +824,9 @@ class _google_map_partState extends State<google_map_part>
         final name = location['name'] as String; // String으로 명시적 캐스팅
         final rating = location['rating'] as String;
         final details = location['details'] as String;
+        final avgPrice = location['avgprice'] as String;
+        final address = location['address'] as String;
+        final impression = location['impression'] as String;
         final latitude = location['latitude'] as double; // double로 명시적 캐스팅
         final longitude = location['longitude'] as double; // double로 명시적 캐스팅
 
@@ -826,6 +842,9 @@ class _google_map_partState extends State<google_map_part>
                     name: name,
                     rating: rating,
                     details: details,
+                    avgprice: avgPrice,
+                    address: address,
+                    impression: impression,
                     descriptions: [],
                     imageUrls: []));
             showLocationDetailDialog(context, locationDetail);
@@ -841,32 +860,243 @@ class _google_map_partState extends State<google_map_part>
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          content: Container(
+        return Dialog(
+          insetPadding: EdgeInsets.all(20),
+          child: Container(
             width: double.maxFinite,
-            height: 400,
-            child: Column(
-              children: <Widget>[
-                // 이미지 슬라이더 구현
-                Container(
-                  height: 200, // 슬라이더의 높이 설정
-                  child: PageView.builder(
-                    controller: pageController,
-                    itemCount: detail.imageUrls.length,
-                    itemBuilder: (context, index) =>
-                        Image.asset(detail.imageUrls[index], fit: BoxFit.cover),
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25)),
+                          child: Container(
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.35,
+                            child: PageView.builder(
+                              controller: pageController,
+                              itemCount: detail.imageUrls.length,
+                              itemBuilder: (context, index) => Image.asset(
+                                  detail.imageUrls[index],
+                                  fit: BoxFit.cover),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 15,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: SmoothPageIndicator(
+                              controller: pageController,
+                              count: 2,
+                              effect: WormEffect(
+                                dotColor: Colors.white,
+                                activeDotColor: Color.fromARGB(255, 74, 74, 74),
+                                type: WormType.thin,
+                                radius: 16,
+                                spacing: 10,
+                                dotHeight: 7,
+                                dotWidth: 7,
+                              )),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                // 필요한 경우 여기에 더 많은 위젯 추가
-              ],
+                  // 필요한 경우 여기에 더 많은 위젯 추가
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18, right: 18),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              detail.name,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                  height: 0.5),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 45, 44, 51),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: EdgeInsets.zero,
+                                  minimumSize: Size(66, 23)),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    detail.rating,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        height: 0.5),
+                                  ),
+                                  SizedBox(width: 4),
+                                  Transform.translate(
+                                    offset: Offset(0, -0.5),
+                                    child: Icon(Icons.star_rounded,
+                                        color: Colors.white, size: 19),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.fmd_good_sharp,
+                                color: Colors.black.withOpacity(0.65),
+                                size: 13),
+                            SizedBox(width: 5),
+                            Text(
+                              detail.address,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.65),
+                                  fontSize: 11,
+                                  height: 0.5),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 25),
+                        Row(
+                          children: [
+                            SizedBox(width: 2),
+                            Icon(Icons.circle,
+                                color: Color.fromARGB(255, 205, 65, 65),
+                                size: 9),
+                            SizedBox(width: 5),
+                            Text(
+                              'Details',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(width: 24),
+                            Text(
+                              detail.details,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.65),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          detail.descriptions[0],
+                          style: TextStyle(
+                              height: 1.7,
+                              color: Colors.black.withOpacity(0.65),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            SizedBox(width: 2),
+                            Icon(Icons.circle,
+                                color: Color.fromARGB(255, 205, 65, 65),
+                                size: 9),
+                            SizedBox(width: 5),
+                            Text(
+                              'Impression',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(width: 24),
+                            Text(
+                              detail.impression,
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.65),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          detail.descriptions[1],
+                          style: TextStyle(
+                              height: 1.7,
+                              color: Colors.black.withOpacity(0.65),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(height: 18),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(width: 1),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  detail.avgprice,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      letterSpacing: 1,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  '/Per person',
+                                  style: TextStyle(
+                                      color: Colors.black.withOpacity(0.65),
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.47,
+                              height: 55,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 45, 44, 51),
+                                  foregroundColor: Colors.white,
+                                  textStyle: TextStyle(),
+                                ),
+                                child: Text('Close'),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('닫기'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
         );
       },
     );

@@ -12,7 +12,13 @@ final hakodate_location = [
     "longitude": 140.72765256812278,
     "rating": "4.0",
     "details": "restaurant",
-    "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "Bad or Soso or Good or Excellent",
+    "description": [
+      "장소의 특성을 살려 설명을 적어주세요",
+      "그 장소의 장단점 or 느낀점 or 기억나는 부분 기재해주세요"
+    ], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
       "asset/img/main2.jpg",
@@ -24,6 +30,9 @@ final hakodate_location = [
     "longitude": 140.7298017579412,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -36,6 +45,9 @@ final hakodate_location = [
     "longitude": 140.70902382792076,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -48,6 +60,9 @@ final hakodate_location = [
     "longitude": 140.7106613122062,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -60,6 +75,9 @@ final hakodate_location = [
     "longitude": 140.71002113139372,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -72,6 +90,9 @@ final hakodate_location = [
     "longitude": 140.71572581184,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -84,6 +105,9 @@ final hakodate_location = [
     "longitude": 140.71637894224915,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -96,6 +120,9 @@ final hakodate_location = [
     "longitude": 140.75401785624734,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -108,6 +135,9 @@ final hakodate_location = [
     "longitude": 140.7518413842555,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -120,6 +150,9 @@ final hakodate_location = [
     "longitude": 140.78950811161872,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -132,6 +165,9 @@ final hakodate_location = [
     "longitude": 140.786612193412,
     "rating": "4.1",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -144,6 +180,9 @@ final hakodate_location = [
     "longitude": 140.78869478265108,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -156,6 +195,9 @@ final hakodate_location = [
     "longitude": 140.71419030069129,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -168,6 +210,9 @@ final hakodate_location = [
     "longitude": 140.71594258202703,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -180,6 +225,9 @@ final hakodate_location = [
     "longitude": 140.724578015536,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -192,6 +240,9 @@ final hakodate_location = [
     "longitude": 140.7211941911241,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -204,6 +255,9 @@ final hakodate_location = [
     "longitude": 140.71968109258523,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -211,15 +265,21 @@ final hakodate_location = [
     ], // 이미지 URL 추가
   },
   {
-    "name": "하치만 궁",
+    "name": "Hachimangū",
     "latitude": 41.753874703885046,
     "longitude": 140.71007637798263,
-    "rating": "4.0",
-    "details": "restaurant",
-    "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
+    "rating": "5.0",
+    "details": "Restaurant",
+    "avgprice": "￥1000",
+    "address": "Yachigashiracho, Hakodate, Hokkaido",
+    "impression": "Soso",
+    "description": [
+      "하코다테산의 나무숲으로 둘러싸인 조용하면서 확 트인 곳에 자리잡은 신사. 약 100년 전에 지어진 본전은 격식을 갖춘 구조로, 특히 지붕이 훌륭합니다.",
+      "입구 앞의 계단이 인상적이며, 애니메이션 속의 신사같았다. 들어가면 약수터가 존재하며, 소원을 적고 걸어놓는 곳이 존재한다."
+    ], // 상세 설명 추가
     "imageUrls": [
-      "asset/img/main1.jpg",
       "asset/img/main2.jpg",
+      "asset/img/main1.jpg",
     ], // 이미지 URL 추가
   },
   {
@@ -228,6 +288,9 @@ final hakodate_location = [
     "longitude": 140.71579921216593,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
@@ -240,6 +303,9 @@ final hakodate_location = [
     "longitude": 140.72963359872205,
     "rating": "4.0",
     "details": "restaurant",
+    "avgprice": "￥1000",
+    "address": "",
+    "impression": "",
     "description": ["호텔의 상세 설명입니다...", ""], // 상세 설명 추가
     "imageUrls": [
       "asset/img/main1.jpg",
