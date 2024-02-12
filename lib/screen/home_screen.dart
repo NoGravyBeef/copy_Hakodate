@@ -553,7 +553,7 @@ class _pageview_partState extends State<_pageview_part>
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Image.asset(
-                    'asset/img/main${number % 4 + 1}.jpg',
+                    'asset/img/main${number % 9 + 1}.jpg',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -714,7 +714,7 @@ class _pageview_3_partState extends State<_pageview_3_part> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
-                    'asset/img/main_2_${number % 6 + 1}.jpg',
+                    'asset/img/main_3_${number % 6 + 1}.jpg',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -880,7 +880,7 @@ class _google_map_partState extends State<google_map_part>
                               topRight: Radius.circular(25)),
                           child: Container(
                             width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.35,
+                            height: MediaQuery.of(context).size.height * 0.43,
                             child: PageView.builder(
                               controller: pageController,
                               itemCount: detail.imageUrls.length,
@@ -899,7 +899,7 @@ class _google_map_partState extends State<google_map_part>
                           alignment: Alignment.center,
                           child: SmoothPageIndicator(
                               controller: pageController,
-                              count: 2,
+                              count: 4,
                               effect: WormEffect(
                                 dotColor: Colors.white,
                                 activeDotColor: Color.fromARGB(255, 74, 74, 74),
@@ -928,7 +928,7 @@ class _google_map_partState extends State<google_map_part>
                                   color: Colors.black,
                                   fontSize: 22,
                                   fontWeight: FontWeight.w600,
-                                  height: 0.5),
+                                  height: 1.1),
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
