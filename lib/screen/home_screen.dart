@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+@pragma('vm:entry-point')
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   TabController? _tabController;
   AnimationController? _animationController;
@@ -162,7 +163,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ],
               header: dragHandle(),
               panel: SingleChildScrollView(
-                child: sliding_up_panel_part(),
+                child: Column(
+                  children: [sliding_up_panel_part()],
+                ),
               ),
               body: SingleChildScrollView(
                 child: Column(
@@ -184,6 +187,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 }
 
+@pragma('vm:entry-point')
 class sliding_up_panel_part extends StatelessWidget {
   const sliding_up_panel_part({
     super.key,
@@ -196,37 +200,35 @@ class sliding_up_panel_part extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(35),
-                  topRight: Radius.circular(35),
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      spreadRadius: 0,
-                      blurRadius: 3.0,
-                      offset: Offset(0, 5)),
-                ],
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(35),
+                topRight: Radius.circular(35),
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(35),
-                  topRight: Radius.circular(35),
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-                child: Container(
-                    width: MediaQuery.of(context).size.width - 16,
-                    height: MediaQuery.of(context).size.height * 0.65,
-                    child: Image.asset(
-                      'asset/img/main2.jpg',
-                      fit: BoxFit.cover,
-                    )),
-              ),
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(35),
+                      topRight: Radius.circular(35),
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 3.0,
+                          offset: Offset(0, 5)),
+                    ],
+                  ),
+                  width: MediaQuery.of(context).size.width - 16,
+                  height: MediaQuery.of(context).size.height * 0.65,
+                  child: Image.asset(
+                    'asset/img/main2.jpg',
+                    fit: BoxFit.cover,
+                  )),
             ),
             Container(
               width: MediaQuery.of(context).size.width - 16,
@@ -317,26 +319,28 @@ class sliding_up_panel_part extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          bottom: 0,
-          right: 0,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text(
-              'Copy_Hakodate',
-              style: TextStyle(
-                fontSize: 12,
-                fontFamily: 'DancingScript',
-                fontWeight: FontWeight.w900,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Text(
+                'Copy_Hakodate',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontFamily: 'DancingScript',
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ],
     );
   }
 }
 
+@pragma('vm:entry-point')
 class dragHandle extends StatelessWidget {
   const dragHandle({
     super.key,
